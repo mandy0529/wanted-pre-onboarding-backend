@@ -1,8 +1,9 @@
-import mysql from 'mysql2';
+import mysql from "mysql2";
 import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
 dotenv.config();
 
-const db = mysql.createConnection({
+export const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -10,4 +11,5 @@ const db = mysql.createConnection({
   port: process.env.DB_PORT,
 });
 
-export default db;
+const primsaDB = new PrismaClient();
+export default primsaDB;
