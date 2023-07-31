@@ -10,8 +10,8 @@ datasource db {
 // 
 model User {
   id       String @id @default(uuid())
-  email    String @unique
-  password String
+  email    String @unique @default("") @db.VarChar(255)
+  password String @default("") @db.VarChar(255)
   Post     Post[]
 
   @@map("user")
@@ -19,8 +19,8 @@ model User {
 
 model Post {
   id       Int    @id @default(autoincrement())
-  title    String
-  content  String
+  title    String @default("") @db.VarChar(255)
+  content  String @default("") @db.VarChar(1000)
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
