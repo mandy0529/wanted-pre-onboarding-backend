@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import primsaDB from "../db/db.js";
 import { BadRequestError } from "../errors/index.js";
 
@@ -24,7 +25,9 @@ export const createPost = async (req, res) => {
   });
 
   // return result
-  return res.json({ msg: "create post successfully" });
+  return res
+    .status(HttpStatusCode.Created)
+    .json({ msg: "create post successfully" });
 };
 
 // get all post ----------------------------------------------
@@ -50,7 +53,7 @@ export const getAllPost = async (req, res) => {
   });
 
   // return posts and page
-  return res.json({ posts, page: currentPage });
+  return res.status(HttpStatusCode.OK).json({ posts, page: currentPage });
 };
 
 // get single post -------------------------------------------
@@ -84,7 +87,7 @@ export const getSinglePost = async (req, res) => {
   }
 
   // return post
-  return res.json({ post });
+  return res.status(HttpStatusCode.OK).json({ post });
 };
 
 // edit single post -------------------------------------------
@@ -109,7 +112,9 @@ export const editSinglePost = async (req, res) => {
   });
 
   // return result
-  return res.json({ msg: "edit single post successfully" });
+  return res
+    .status(HttpStatusCode.OK)
+    .json({ msg: "edit single post successfully" });
 };
 
 // delete single post
@@ -124,5 +129,7 @@ export const deleteSinglePost = async (req, res) => {
   });
 
   // return result
-  return res.json({ msg: "delete single post successfully" });
+  return res
+    .status(HttpStatusCode.OK)
+    .json({ msg: "delete single post successfully" });
 };

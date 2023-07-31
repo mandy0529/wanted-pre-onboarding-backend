@@ -103,16 +103,15 @@ export const loginUser = async (req, res) => {
     throw new BadRequestError("Invalid user credentials");
   }
 
-  // 비밀번호 정보빼고 user 담기
+  // 비밀번호 정보 빼고 user 담기
   delete user?.password;
 
   // user 정보 담아서 jwt 생성
   const payload = {
     email: user?.email,
   };
-
   const token = await createJWT(payload);
 
   // return user
-  return res.json({ token });
+  return res.status(HttpStatusCode.Ok).json({ token });
 };
