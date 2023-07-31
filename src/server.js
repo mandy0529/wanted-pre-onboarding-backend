@@ -6,7 +6,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import xss from "xss-clean";
 import helmet from "helmet";
-import db from "./db/db.js";
+import { db } from "./db/db.js";
 
 // import files
 import {
