@@ -10,7 +10,7 @@ import { BadRequestError } from "../errors/index.js";
 import prismaDB from "../db/db.js";
 import { HttpStatusCode } from "axios";
 
-// register user
+// register user -----------------------------------------------
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -62,7 +62,7 @@ export const registerUser = async (req, res) => {
     .json({ msg: "register user successfully" });
 };
 
-// login user
+// login user --------------------------------------------------
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
