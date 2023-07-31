@@ -7,7 +7,10 @@ import cookieParser from "cookie-parser";
 import xss from "xss-clean";
 import helmet from "helmet";
 import db from "./db/db.js";
-
+import {
+  errorHandlerMiddleware,
+  notFoundMiddleware,
+} from "./middlewares/index.js";
 // app set
 const PORT = process.env.PORT ?? 5000;
 const app = express();
