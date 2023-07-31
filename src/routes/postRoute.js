@@ -6,15 +6,19 @@ import {
   getAllPost,
   getSinglePost,
 } from "../controllers/postController.js";
+import {
+  authenticateUser,
+  authorizePermissionForOnlyAuthor,
+} from "../middlewares/index.js";
 
 const router = express.Router();
 
 // register & login
-router.route("/").post(createPost).get(getAllPost);
+router.route("/").post(authenticateUser, createPost).get(getAllPost);
 router
   .route("/:id")
   .get(getSinglePost)
-  .put(editSinglePost)
-  .delete(deleteSinglePost);
+  .put(authenticateUser, authorizePermissionForOnlyAuthor, editSinglePost)
+  .delete(authenticateUser, authorizePermissionForOnlyAuthor, deleteSinglePost);
 
 export default router;
