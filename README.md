@@ -91,6 +91,7 @@
 <hr/>
 
 ### 4. 구현한 API의 동작을 촬영한 데모 영상 링크
+데모영상 :[데모영상](https://drive.google.com/file/d/1kNPlbChNEV_2jJfSo68auxgj3zQy0zjD/view?usp=drive_link)
 <hr/>
 
 ### 5. 구현 방법 및 이유에 대한 간략한 설명
