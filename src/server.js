@@ -21,6 +21,10 @@ app.use(xss());
 app.use(cors());
 app.use(cookieParser());
 
+// 🔥 error middleware 항상 마지막 미들웨어에 위치 🔥
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
 //  routers
 app.get("/", (req, res) => {
   res.json({ msg: "welcome minji" });
