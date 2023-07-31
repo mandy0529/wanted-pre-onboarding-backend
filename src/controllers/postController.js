@@ -53,7 +53,7 @@ export const getAllPost = async (req, res) => {
   });
 
   // return posts and page
-  return res.status(HttpStatusCode.OK).json({ posts, page: currentPage });
+  return res.status(HttpStatusCode.Ok).json({ posts, page: currentPage });
 };
 
 // get single post -------------------------------------------
@@ -87,7 +87,7 @@ export const getSinglePost = async (req, res) => {
   }
 
   // return post
-  return res.status(HttpStatusCode.OK).json({ post });
+  return res.status(HttpStatusCode.Ok).json({ post });
 };
 
 // edit single post -------------------------------------------
@@ -113,7 +113,7 @@ export const editSinglePost = async (req, res) => {
 
   // return result
   return res
-    .status(HttpStatusCode.OK)
+    .status(HttpStatusCode.Ok)
     .json({ msg: "edit single post successfully" });
 };
 
@@ -130,6 +130,6 @@ export const deleteSinglePost = async (req, res) => {
 
   // return result
   return res
-    .status(HttpStatusCode.OK)
+    .status(HttpStatusCode.Ok)
     .json({ msg: "delete single post successfully" });
 };
