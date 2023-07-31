@@ -1,6 +1,18 @@
 ## ✨원티드 프리온보딩 백엔드 인턴쉽 사전 과제✨
 
+#### 목차
+1. [정보](#1-지원자-성명--김민지)
+2. [어플리케이션 실행방법](#2-애플리케이션의-실행-방법-엔드포인트-호출-방법-포함)
+3. [데이터베이스 테이블 구조](#3-데이터베이스-테이블-구조)
+4. [구현한 API의 동작을 촬영한 데모 영상 링크](#4-구현한-api의-동작을-촬영한-데모-영상-링크)
+5. [구현 방법 및 이유에 대한 간략한 설명](#5-구현-방법-및-이유에-대한-간략한-설명)
+6. [API 명세(request/response 포함)](#6-api-명세requestresponse-포함)
+7. [가산점 요소 추가 실행방법](#7-가산점-요소-추가-실행방법)
+
+<hr/>
+
 ### 1. 지원자 성명 : 김민지
+
 <hr/>
 
 ### 2. 애플리케이션의 실행 방법 (엔드포인트 호출 방법 포함)
@@ -240,3 +252,42 @@
         - 404 Not Found: 해당 ID의 게시글이 존재❌
         - 500 Internal Server Error: 서버 오류로 게시글 삭제에 실패
     
+<hr/>
+
+### 7. 가산점 요소 추가 실행방법
+
+
+##### 1. 통합테스트 단위 테스트 추가
+
+##### 2. docker compose 이용해서 어플리케이션 환경 구성
+- docker-compose.yml 파일 생성
+- Mysql:8.0버전 image 기반으로 합니다.
+- container_name 정해줍니다.
+- mysql에 필요한 environment를 설정해줍니다.
+- ports : 호스트의 3306 포트와 컨테이너의 3306 포트를 연결합니다. 
+- volumes :  MySQL 데이터베이스의 데이터를 영속적으로 저장하기 위한 볼륨 설정입니다.
+- docker compose up -d 명령어로 백그라운드에서 컨테이너를 실행합니다.
+- 그래서 데이터베이스 서버가 실행되고 호스트의 3306 포트를 통해 MySQL에 접속합니다.
+```
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: 
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+      MYSQL_USER: 
+      MYSQL_PASSWORD: 
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+
+```
+
+##### 3. 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 배포 (포된 API 주소와 설계한 AWS 환경 그림으로 첨부)
