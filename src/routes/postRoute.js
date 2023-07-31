@@ -18,7 +18,7 @@ router.route("/").post(authenticateUser, createPost).get(getAllPost);
 router
   .route("/:id")
   .get(getSinglePost)
-  .put(authenticateUser, authorizePermissionForOnlyAuthor, editSinglePost)
+  .patch(authenticateUser, authorizePermissionForOnlyAuthor, editSinglePost)
   .delete(authenticateUser, authorizePermissionForOnlyAuthor, deleteSinglePost);
 
 export default router;
