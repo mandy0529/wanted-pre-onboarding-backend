@@ -7,13 +7,21 @@ import cookieParser from "cookie-parser";
 import xss from "xss-clean";
 import helmet from "helmet";
 import db from "./db/db.js";
+
+// import files
 import {
   errorHandlerMiddleware,
   notFoundMiddleware,
 } from "./middlewares/index.js";
-// app set
+
+// import routes
+import userRouter from "./routes/userRoute.js";
+import postRouter from "./routes/postRoute.js";
+
+// app set ---------------------------------------------
 const PORT = process.env.PORT ?? 5000;
 const app = express();
+const base_url = "/api/v1";
 
 // extra packages middleware setup
 app.set("trust proxy", 1);
@@ -24,14 +32,16 @@ app.use(xss());
 app.use(cors());
 app.use(cookieParser());
 
-// 🔥 error middleware 항상 마지막 미들웨어에 위치 🔥
-app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
-
 //  routers
 app.get("/", (req, res) => {
   res.json({ msg: "welcome minji" });
 });
+app.use(`${base_url}/user`, userRouter);
+app.use(`${base_url}/post`, postRouter);
+
+// 🔥 error middleware 항상 마지막 미들웨어에 위치 🔥
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 // start server
 const startServer = async () => {
