@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "axios";
 import primsaDB from "../db/db.js";
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/index.js";
 
 // create post -----------------------------------------------
 export const createPost = async (req, res) => {
@@ -83,7 +83,7 @@ export const getSinglePost = async (req, res) => {
 
   // post이 없다면 throw error
   if (!post) {
-    throw new BadRequestError("Post does not exist");
+    throw new NotFoundError("Post does not exist");
   }
 
   // return post
@@ -130,6 +130,6 @@ export const deleteSinglePost = async (req, res) => {
 
   // return result
   return res
-    .status(HttpStatusCode.Ok)
+    .status(HttpStatusCode.NoContent)
     .json({ msg: "delete single post successfully" });
 };

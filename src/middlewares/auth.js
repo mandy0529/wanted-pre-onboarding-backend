@@ -1,5 +1,10 @@
 import primsaDB from "../db/db.js";
-import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+  UnauthorizedError,
+} from "../errors/index.js";
 import { isTokenValid } from "../lib/index.js";
 
 // 로그인한 사용자 token받아서 req.user에 등록
@@ -42,12 +47,12 @@ const authorizePermissionForOnlyAuthor = async (req, res, next) => {
 
   // 해당 post가 존재하지 않을 때
   if (!existPost) {
-    throw new BadRequestError("Post does not exist");
+    throw new NotFoundError("Post does not exist");
   }
 
   // authenticateUser에서 받아온 email과 내 db의 유저 email이 서로 맞지 않을때 throw error
   if (existPost?.author?.email !== req?.user?.email) {
-    throw new UnauthenticatedError("Not Authorized to access this user");
+    throw new UnauthorizedError("Not Authorized to access this user");
   }
   next();
 };
