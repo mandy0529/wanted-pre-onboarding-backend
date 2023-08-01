@@ -42,7 +42,7 @@ describe("Auth Route Integration Tests", () => {
   });
 });
 
-// post route integration tests
+// post route integration tests ---------------------------------------
 describe("Post Route Integration Tests", () => {
   // create post
   it("POST /api/v1/post should register a new post", (done) => {
