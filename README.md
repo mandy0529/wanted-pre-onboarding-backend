@@ -257,22 +257,30 @@
 ### 7. 가산점 요소 추가 실행방법
 
 
-##### 1. 통합테스트 단위 테스트 추가
+##### 1. 통합테스트 추가
+- mocha, supertest, chai를 이용해 user, post 통합 테스트를 실행 했습니다.
+- 개발환경과 test 환경을 따로 구축하여 테스트코드를 실행할때마다 prisma test database를 reset시키고, test 실행 하였습니다.
+- package.json에서 dotenv-cli를 이용해서 test 환경과 dev 환경 env를 다른 파일을 바라보도록 설정하여 구성 하였습니다.
 
 ##### 2. docker compose 이용해서 어플리케이션 환경 구성
-- docker-compose.yml 파일 생성
+- docker-compose.yml 파일 생성합니다.
+- 데이터베이스 두개의 서비스로 정의합니다. (dev-db, test-db)
 - Mysql:8.0버전 image 기반으로 합니다.
-- container_name 정해줍니다.
+- 각각의 container_name 정해줍니다.
 - mysql에 필요한 environment를 설정해줍니다.
-- ports : 호스트의 3306 포트와 컨테이너의 3306 포트를 연결합니다. 
-- volumes :  MySQL 데이터베이스의 데이터를 영속적으로 저장하기 위한 볼륨 설정입니다.
-- docker compose up -d 명령어로 백그라운드에서 컨테이너를 실행합니다.
-- 그래서 데이터베이스 서버가 실행되고 호스트의 3306 포트를 통해 MySQL에 접속합니다.
+- ports : 
+    - dev에서는 호스트의 3306 포트와 컨테이너의 3306 포트를 매핑하여 로컬 컴퓨터에서 MySQL에 접속할 수 있도록 설정하였습니다.
+    - test에서는 호스트의 3307 포트와 컨테이너의 3306 포트를 매핑하여 로컬 컴퓨터에서 MySQL에 접속할 수 있도록 설정하였습니다.
+    - 이를 통해 테스트 환경에서 개발 환경과 독립적으로 데이터베이스를 사용할 수 있습니다
+- docker compose up 
+    - "db:dev:up": "docker compose up dev-db -d" 명령어로 dev:db를 up 해줍니다.
+    - "db:test:up": "docker compose up test-db -d" 명령어로 test:db를 up 해줍니다.
+    - 그래서 데이터베이스 서버가 실행되고 호스트의 각각 매핑한 port로 연결되어 test환경과 개발 환경을 나눠줍니다.
 ```
 version: "3"
 
 services:
-  mysql:
+  dev-db:
     image: mysql:8.0
     container_name: 
     environment:
@@ -282,11 +290,20 @@ services:
       MYSQL_PASSWORD: 
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
 
-volumes:
-  mysql_data:
+   test-db:
+    image: mysql:8.0
+    container_name: 
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+      MYSQL_USER: 
+      MYSQL_PASSWORD: 
+    ports:
+      - "3307:3306"
+
+
+
 
 ```
 
