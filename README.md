@@ -254,8 +254,7 @@
     
 <hr/>
 
-### 7. 가산점 요소 추가 실행방법
-
+### 7. 가산점 요소 추가 설명
 
 ##### 1. 통합테스트 추가
 - mocha, supertest, chai를 이용해 user, post 통합 테스트를 실행 했습니다.
@@ -265,8 +264,8 @@
 ##### 2. docker compose 이용해서 어플리케이션 환경 구성
 - docker-compose.yml 파일 생성합니다.
 - 데이터베이스 두개의 서비스로 정의합니다. (dev-db, test-db)
-- Mysql:8.0버전 image 기반으로 합니다.
-- 각각의 container_name 정해줍니다.
+- Mysql : 8.0버전 image 기반으로 합니다.
+- dev, test에서의 각각의 container_name 정해줍니다.
 - mysql에 필요한 environment를 설정해줍니다.
 - ports : 
     - dev에서는 호스트의 3306 포트와 컨테이너의 3306 포트를 매핑하여 로컬 컴퓨터에서 MySQL에 접속할 수 있도록 설정하였습니다.
@@ -301,10 +300,6 @@ services:
       MYSQL_PASSWORD: 
     ports:
       - "3307:3306"
-
-
-
-
 ```
 
 ##### 3. 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 배포 (포된 API 주소와 설계한 AWS 환경 그림으로 첨부)
