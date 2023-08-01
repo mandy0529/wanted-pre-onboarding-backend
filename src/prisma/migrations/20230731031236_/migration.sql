@@ -1,7 +1,0 @@
--- AlterTable
-ALTER TABLE `post` MODIFY `title` VARCHAR(255) NOT NULL DEFAULT '',
-    MODIFY `content` VARCHAR(1000) NOT NULL DEFAULT '';
-
--- AlterTable
-ALTER TABLE `user` MODIFY `email` VARCHAR(255) NOT NULL DEFAULT '',
-    MODIFY `password` VARCHAR(255) NOT NULL DEFAULT '';
