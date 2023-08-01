@@ -33,9 +33,6 @@ app.use(cors());
 app.use(cookieParser());
 
 //  routers
-app.get("/", (req, res) => {
-  res.json({ msg: "welcome minji" });
-});
 app.use(`${base_url}/user`, userRouter);
 app.use(`${base_url}/post`, postRouter);
 
@@ -44,7 +41,7 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 // start server
-const startServer = async () => {
+const startServer = () => {
   db.connect((err) => {
     if (err) {
       console.error("❌ Error connecting to the database:", err.message);
@@ -59,3 +56,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+export default app;
