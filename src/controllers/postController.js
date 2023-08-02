@@ -42,6 +42,7 @@ export const getAllPost = async (req, res) => {
     skip: startIndex,
     take: postsPerPage,
     select: {
+      id: true,
       title: true,
       content: true,
       author: {
@@ -71,6 +72,7 @@ export const getSinglePost = async (req, res) => {
       id: Number(id),
     },
     select: {
+      id: true,
       title: true,
       content: true,
       author: {
