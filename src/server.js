@@ -6,7 +6,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import xss from "xss-clean";
 import helmet from "helmet";
-import { db } from "./db/db.js";
+import primsaDB from "./db/db.js";
 
 // import files
 import {
@@ -19,7 +19,7 @@ import userRouter from "./routes/userRoute.js";
 import postRouter from "./routes/postRoute.js";
 
 // app set ---------------------------------------------
-const PORT = process.env.PORT ?? 5000;
+const PORT = process.env.PORT ?? 3000;
 const app = express();
 const base_url = "/api/v1";
 
@@ -41,18 +41,16 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 // start server
-const startServer = () => {
-  db.connect((err) => {
-    if (err) {
-      console.error("❌ Error connecting to the database:", err.message);
-      return;
-    }
-
-    console.log("✅ Success connection with db");
+const startServer = async () => {
+  try {
+    await primsaDB.$connect();
+    console.log("Prisma DB가 연결되었습니다.");
     app.listen(PORT, () => {
       console.log(`✅ Listening for server on port ${PORT}`);
     });
-  });
+  } catch (error) {
+    console.error("Prisma DB 연결에 실패했습니다.", error);
+  }
 };
 
 startServer();
