@@ -8,7 +8,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { BadRequestError } from "../errors/index.js";
 import prismaDB from "../db/db.js";
-import { HttpStatusCode } from "axios";
+import { StatusCodes } from "http-status-codes";
 
 // register user -----------------------------------------------
 export const registerUser = async (req, res) => {
@@ -58,7 +58,7 @@ export const registerUser = async (req, res) => {
 
   // return user
   return res
-    .status(HttpStatusCode.Created)
+    .status(StatusCodes.CREATED)
     .json({ msg: "register user successfully" });
 };
 
@@ -113,5 +113,5 @@ export const loginUser = async (req, res) => {
   const token = await createJWT(payload);
 
   // return user
-  return res.status(HttpStatusCode.Ok).json({ token });
+  return res.status(StatusCodes.OK).json({ token });
 };
