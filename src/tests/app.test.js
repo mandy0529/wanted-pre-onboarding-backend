@@ -248,7 +248,7 @@ describe("Post Route Integration Tests", () => {
       .set("Authorization", `Bearer ${token}`)
       .end((err, res) => {
         expect(res.statusCode).to.equal(204);
-        expect(res.body).to.be.empty; // 빈 객체가 반환되는지 확인
+        expect(res.body).to.be.empty;
         done();
       });
   });
