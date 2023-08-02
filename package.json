@@ -24,7 +24,6 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
-    "mysql2": "^3.5.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
