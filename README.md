@@ -56,8 +56,8 @@
           - wanted-work
 
       # node app DB
-      app:
-        container_name: node-app
+      dev-app:
+        container_name: dev-app
         build:
           context: .
           target: dev
@@ -126,8 +126,8 @@
           - wanted-work
 
       # node app DB
-      app:
-        container_name: app
+      test-app:
+        container_name: test-app
         build:
           context: .
           target: test
