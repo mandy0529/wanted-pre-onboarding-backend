@@ -63,7 +63,7 @@
     <ul>
         <li>
             <strong>1. 게시글 글쓰기</strong>
-            <pre><code>POST</code> /api/v1/post <br/>    -H "Authorization: Bearer ${token}"" <br/>    -d '{ "title": "새로운 게시글", "content": "이것은 새로운 게시글 내용입니다." }</pre>
+            <pre><code>POST</code> /api/v1/post <br/>    -H "Authorization: Bearer ${token}" <br/>    -d '{ "title": "새로운 게시글", "content": "이것은 새로운 게시글 내용입니다." }</pre>
             <p>* 게시글을 작성할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
         </li>
         <li>
@@ -76,12 +76,12 @@
         </li>
         <li>
             <strong>4. 해당 게시글 수정하기</strong>
-            <pre><code>PATCH</code> /api/v1/post/:id <br/>      -d '{ "title": "edit title", "content": "edit content" }</pre>
+            <pre><code>PATCH</code> /api/v1/post/:id <br/>      -H "Authorization: Bearer ${token}" <br/>     -d '{ "title": "edit title", "content": "edit content" }</pre>
             <p>* 게시글을 수정할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
         </li>
         <li>
             <strong>5. 해당 게시글 삭제하기</strong>
-            <pre><code>DELETE</code> /api/v1/post/:id </pre>
+            <pre><code>DELETE</code> /api/v1/post/:id <br />       -H "Authorization: Bearer ${token}" </pre>
             <p>* 게시글을 삭제할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
         </li>
     </ul>
