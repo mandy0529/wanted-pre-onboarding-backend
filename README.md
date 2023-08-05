@@ -15,57 +15,162 @@
 
 <hr/>
 
-### 2. 애플리케이션의 실행 방법 (엔드포인트 호출 방법 포함)
-1. **git 저장소를 클론 합니다.**
-    -  https://github.com/mandy0529/wanted-pre-onboarding-backend
+### 2. 애플리케이션의 실행 방법 
+1. **DEV docker-compose 환경 실행 방법**
+- .env.dev 파일 생성
+    ```
+    touch .env.dev
+    ```
+- .env.dev 파일 구성 예제
+    ```
+    DATABASE_URL="mysql://root:devrootpassword@dev-db:3306/database"
+    JWT_SECRET=jwtsecret   
+    ```
+-  docker-compose.dev.yml 파일 생성
+    ```
+    touch docker-compose.dev.yml
+    ```
+-  docker-compose.dev.yml 파일 구성 예제
+    ```
+    version: "3"
+    services:
+      # dev DB
+      dev-db:
+        profiles:
+          - dev
+        container_name: dev-db
+        build:
+          context: ./db
+        environment:
+          MYSQL_ROOT_PASSWORD: devrootpassword
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: database
+          MYSQL_USER: user
+        ports:
+          - "3306:3306"
+        networks:
+          - wanted-work
 
-2. **필요한 환경 변수를 설정합니다.**
+      # node app DB
+      app:
+        container_name: node-app
+        build:
+          context: .
+          target: dev
+        ports:
+          - "3000:3000"
+        networks:
+          - wanted-work
+        restart: on-failure:6 
+        env_file:
+          - .env.dev
+    networks:
+      wanted-work:
     ```
-     touch .env
+- docker compose dev.yml파일에서 dev-db를 먼저 up 시킵니다.
+    ```
+    yarn db:dev:up
+    or 
+    npm run db:dev:up
+    ```
+- docker compose dev.yml 파일에서 app을 up 시킵니다.
+    ```
+    yarn app:dev:up
+    or 
+    npm run app:dev:up
+    ```
+- 해당 server에서 listening 하고있는 port로 켜집니다.
 
-        // env 파일 구성
-        <!-- prisma database url -->
-       DATABASE_URL=
+2. **TEST docker-compose 환경 실행 방법**
+- .env.test 파일 생성
+    ```
+    touch .env.test
+    ```
+- .env.test 파일 구성 예제
+    ```
+    DATABASE_URL="mysql://root:testrootpassword@test-db:3306/database"
+    JWT_SECRET=jwtsecret   
+    ```
+-  docker-compose.test.yml 파일 생성
+    ```
+    touch docker-compose.test.yml
+    ```
 
-        <!-- docker environment -->
-       DB_HOST=
-       DB_USER=
-       DB_PASSWORD=
-       DB_DATABASE=
-       DB_PORT=
+-  docker-compose.test.yml 파일 구성 예제
+    ```
+    version: "3"
+    services:
+       # test DB
+      test-db:
+        profiles:
+          - test
+        container_name: test-db
+        build:
+          context: ./db
+        environment:
+          MYSQL_ROOT_PASSWORD: testrootpassword
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: database
+          MYSQL_USER: user
+        ports:
+          - "3307:3306"
+        networks:
+          - wanted-work
 
-        <!-- jwt secret -->
-       JWT_SECRET
+      # node app DB
+      app:
+        container_name: app
+        build:
+          context: .
+          target: test
+        ports:
+          - "3001:3000"
+        networks:
+          - wanted-work
+        restart: on-failure:6 
+        env_file:
+          - .env.test
+    networks:
+      wanted-work:
     ```
-3. **의존성 패키지를 설치합니다.**
+- docker compose test.yml파일에서 test-db를 먼저 up 시킵니다.
     ```
-    yarn add or npm install
-    ```       
-4. **데이터베이스 설정 및 마이그레이션을 수행합니다.**   
-    - 참조 [prisma](https://www.prisma.io/docs/concepts/database-connectors/mysql)
+    yarn db:test:up
+    or 
+    npm run db:test:up
     ```
-    npx prisma init
-    npx prisma migrate dev
-    npx prisma generate
+- docker compose test.yml 파일에서 app을 up 시킵니다.
     ```
-5. **어플리케이션을 실행합니다.**
+    yarn app:test:up
+    or 
+    npm run app:test:up
     ```
-    yarn dev or npm run dev
-    ```
-6. **endpoint 호출 방법**
+- 해당 server에서 listening 하고있는 port로 켜지고, mocha test code가 실행됩니다.
+
+3. **aws 배포한 주소**
+http://13.209.87.140:3000/
+
+
+4. **endpoint 호출 방법**
    1. User
         - 회원가입 
+        
         ```
-        POST /api/v1/user/register
+        POST /api/v1/user/register 
+              -d '{ "email": "test@gmail.com", "password": "password1234" }
         ```
         - 로그인 
         ```
         POST /api/v1/user/login
+            -d '{ "email": "test@gmail.com", "password": "password1234" }
         ```
     2. Post
         - 게시글 글쓰기 
+                <span style='color:red'> * 게시글을 작성할 때는 Bearer Token이 필요합니다. <br/> * Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</span>
         ```
         POST /api/v1/post
+            -H "Authorization: Bearer ${token}"" 
+            -d '{ "title": "새로운 게시글", "content": "이것은 새로운 게시글 내용입니다." }
         ```
         - 모든 게시글 불러오기 ( pagenation 포함 )
         ```
@@ -76,12 +181,17 @@
         GET /api/v1/post/:id
         ```
         - 해당 게시글 수정하기
+                <span style='color:red'> * 게시글을 수정할 때는 Bearer Token이 필요합니다. <br/> * Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</span>
         ```
         PATCH /api/v1/post/:id
+            -H "Authorization: Bearer ${token}" 
+            -d '{ "title": "edit title", "content": "edit content" }
         ```
         - 해당 게시글 삭제하기 
+                <span style='color:red'> * 게시글을 삭제할 때는 Bearer Token이 필요합니다. <br/> * Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</span>
         ```
         DELETE /api/v1/post/:id
+              -H "Authorization: Bearer ${token}" 
         ```
 <hr/>   
 
@@ -147,6 +257,7 @@
     - end point:
       ```
         POST /api/v1/user/register
+            -d '{ "email": "test@gmail.com", "password": "password1234" }
         ```
      - Request 
         - Body: {
@@ -164,6 +275,7 @@
     - end point:
         ```
         POST /api/v1/user/login
+            -d '{ "email": "test@gmail.com", "password": "password1234" }
         ```
      - Request 
         - Body: {
@@ -181,12 +293,17 @@
     - end point:
         ```
         POST /api/v1/post
+            -H "Authorization: Bearer ${token}"" 
+            -d '{ "title": "새로운 게시글", "content": "이것은 새로운 게시글 내용입니다." }
         ```
 
      - Request 
         - Body: {
             "title": "게시글 제목",
             "content": "게시글 내용"
+        }
+        - Headers: {
+            Authorization: Bearer {token}
         }
 
      - Success Response:
@@ -226,12 +343,17 @@
     - end point:
         ```
         PATCH /api/v1/post/:id
+            -H "Authorization: Bearer ${token}" 
+            -d '{ "title": "edit title", "content": "edit content" }
         ```
     - Request 
         - Body: {
             "title": "수정된 게시글 제목",
             "content":"수정된 게시글 내용"
             }
+        - Headers: {
+            Authorization: Bearer {token}
+        }
     - Success Response
         - 200 OK: 요청에 성공하고 게시글이 수정
     - Error Response
@@ -244,6 +366,7 @@
     - end point:
         ```
         DELETE /api/v1/post/:id
+              -H "Authorization: Bearer ${token}" 
         ```
     - Success Response:
         - 204 No Content: 요청에 성공하고 게시글이 삭제
@@ -262,42 +385,24 @@
 - package.json에서 dotenv-cli를 이용해서 test 환경과 dev 환경 env를 다른 파일을 바라보도록 설정하여 구성 하였습니다.
 
 ##### 2. docker compose 이용해서 어플리케이션 환경 구성
-- docker-compose.yml 파일 생성합니다.
-- 데이터베이스 두개의 서비스로 정의합니다. (dev-db, test-db)
-- Mysql : 8.0버전 image 기반으로 합니다.
-- dev, test에서의 각각의 container_name 정해줍니다.
-- mysql에 필요한 environment를 설정해줍니다.
-- ports : 
-    - dev에서는 호스트의 3306 포트와 컨테이너의 3306 포트를 매핑하여 로컬 컴퓨터에서 MySQL에 접속할 수 있도록 설정하였습니다.
-    - test에서는 호스트의 3307 포트와 컨테이너의 3306 포트를 매핑하여 로컬 컴퓨터에서 MySQL에 접속할 수 있도록 설정하였습니다.
-    - 이를 통해 테스트 환경에서 개발 환경과 독립적으로 데이터베이스를 사용할 수 있습니다
-- docker compose up 
-    - "db:dev:up": "docker compose up dev-db -d" 명령어로 dev:db를 up 해줍니다.
-    - "db:test:up": "docker compose up test-db -d" 명령어로 test:db를 up 해줍니다.
-    - 그래서 데이터베이스 서버가 실행되고 호스트의 각각 매핑한 port로 연결되어 test환경과 개발 환경을 나눠줍니다.
-```
-version: "3"
+- docker-compose 를 이용해 실행방법 [어플리케이션 실행방법](#2-애플리케이션의-실행-방법-엔드포인트-호출-방법-포함) 적어놨습니다.
+- docker-compose.yml 파일을 dev, test, prd로 나눠 각각 환경에 맞게 env 파일, port, build할 image를 바라보게 조정하여 구성하였습니다.
 
-services:
-  dev-db:
-    image: mysql:8.0
-    container_name: 
-    environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: 
-      MYSQL_USER: 
-      MYSQL_PASSWORD: 
-    ports:
-      - "3306:3306"
+##### 3. 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부)
+- AWS 환경 설계 및 배포 과정:
+    -  ECR(Elastic Container Registry)에 Docker 이미지 db와 app을 각각 docker로 build한 나의 이미지들을 업로드합니다. 
+    -  ECS 클러스터를 생성합니다.
+    - 클러스터를 생성할때 key pair를 해줘서 ssh에 접근할 수 있도록 만듭니다.
+    - IAM 역할을 생성하여 ECS가 ECR에 접근하고 RDS에 접근할 수 있도록 권한을 부여합니다.
+    - ECS 클러스터에 작업정의 db, app에 관한 작업 정의 2개를 지정 해줍니다.
+    - 컨테이너를 실행할 EC2 인스턴스를 준비합니다.
+    - pem 파일을 이용해 내 EC2 인스턴스 안에 접근합니다.
+    - 올려져있는 docker images들을 확인하고,
+    - 잘 올라가있으면 이제 docker images들 실행해주기 위한 docker-compose.yml파일을 생성합니다
+    - docker-compose.yml파일에는 우리의 환경변수들이나 docker container를 실행시키기 위한 내앱에 필요한 환경변수, port mapping, network 설정을 지정해줍니다.
+    - docker-compose 명령어를 써주기 위해 다운 받고,
+    - docker compose up -d detach모드로 db, app을 실행시키고, app이 잘 열리는지와 prisma가 잘 연결되었는지 확인 합니다.
+    - 잘 열리면 내 api가 잘 완성되었습니다 !
 
-   test-db:
-    image: mysql:8.0
-    container_name: 
-    environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: 
-      MYSQL_USER: 
-      MYSQL_PASSWORD: 
-    ports:
-      - "3307:3306"
-```
+
+
