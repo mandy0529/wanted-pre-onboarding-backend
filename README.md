@@ -17,6 +17,10 @@
 
 ### 2. 애플리케이션의 실행 방법 
 1. **DEV docker-compose 환경 실행 방법**
+- git clone
+    ```
+    git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
+    ```
 - .env.dev 파일 생성
     ```
     touch .env.dev
@@ -82,6 +86,10 @@
 - 해당 server에서 listening 하고있는 port로 켜집니다.
 
 2. **TEST docker-compose 환경 실행 방법**
+- git clone
+    ```
+    git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
+    ```
 - .env.test 파일 생성
     ```
     touch .env.test
@@ -317,7 +325,7 @@ http://13.209.87.140:3000/
 - **get all post**
     - end point:
         ```
-        GET /api/v1/post
+        GET /api/v1/post?page=1
         ```
     - Success Response
         - 200 OK: 요청에 성공, 게시글 목록 반환
