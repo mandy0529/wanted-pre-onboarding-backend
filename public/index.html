@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API 문서</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        p {
+            color:red
+        }
+        h1 {
+            color: #337ab7;
+        }
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 15px;
+        }
+        strong {
+            color: #337ab7;
+        }
+        pre {
+            background-color: #f7f7f7;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        code {
+            font-weight:bold;
+        }
+        hr {
+            margin : 50px 0px;
+        }
+    </style>
+</head>
+<body>
+    <h1>원티드 프리온보딩 백엔드 김민지</h1>
+    <a target="_blank" href="https://github.com/mandy0529/wanted-pre-onboarding-backend">My Github Link</a>
+    <hr/>
+    <h1>API 문서</h1>
+
+    <h2>User</h2>
+    <ul>
+        <li>
+            <strong>1. 회원가입</strong>
+            <pre><code>POST</code> /api/v1/user/register <br/>     -d '{ "email": "test@gmail.com", "password": "password1234" }</pre>
+        </li>
+        <li>
+            <strong>2. 로그인</strong>
+            <pre><code>POST</code> /api/v1/user/login <br/>     -d '{ "email": "test@gmail.com", "password": "password1234" }</pre>
+        </li>
+    </ul>
+
+    <hr/>
+    <h2>Post</h2>
+    <ul>
+        <li>
+            <strong>1. 게시글 글쓰기</strong>
+            <pre><code>POST</code> /api/v1/post <br/>    -H "Authorization: Bearer ${token}"" <br/>    -d '{ "title": "새로운 게시글", "content": "이것은 새로운 게시글 내용입니다." }</pre>
+            <p>* 게시글을 작성할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
+        </li>
+        <li>
+            <strong>2. 모든 게시글 불러오기 (pagination 포함)</strong>
+            <pre><code>GET</code> /api/v1/post?page=1</pre>
+        </li>
+        <li>
+            <strong>3. 해당 게시글 불러오기</strong>
+            <pre><code>GET</code> /api/v1/post/:id</pre>
+        </li>
+        <li>
+            <strong>4. 해당 게시글 수정하기</strong>
+            <pre><code>PATCH</code> /api/v1/post/:id <br/>      -d '{ "title": "edit title", "content": "edit content" }</pre>
+            <p>* 게시글을 수정할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
+        </li>
+        <li>
+            <strong>5. 해당 게시글 삭제하기</strong>
+            <pre><code>DELETE</code> /api/v1/post/:id </pre>
+            <p>* 게시글을 삭제할 때는 Bearer Token이 필요합니다. Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</p>
+        </li>
+    </ul>
+</body>
+</html>
