@@ -28,7 +28,7 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn", "start:"]
+CMD ["yarn", "start:test"]
 
 # 배포용 빌드 스테이지 -----------------------------------------
 FROM node:18.17 as prd
