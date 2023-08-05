@@ -4,21 +4,19 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "pretest:all": "dotenv -e .env.test -- prisma migrate reset",
-    "test:all": "dotenv -e .env.test -- mocha src/tests/*",
-    "prisma:dev:deploy": "prisma migrate deploy",
-    "db:dev:rm": "docker compose rm dev-db -s -f -v",
-    "db:dev:up": "docker compose up dev-db -d",
-    "db:dev:restart": "yarn db:dev:rm && yarn db:dev:up && sleep 1 && yarn prisma:dev:deploy",
-    "prisma:test:deploy": "dotenv -e .env.test -- prisma migrate dev",
-    "db:test:rm": "docker compose rm test-db -s -f -v",
-    "db:test:up": "docker compose up test-db -d",
-    "db:test:restart": "yarn db:test:rm && yarn db:test:up && sleep 1 && yarn prisma:test:deploy"
+    "migrate:dev":"dotenv -e .env.dev -- prisma migrate dev",
+    "migrate:deploy":"prisma migrate deploy",
+    "migrate:test": "dotenv -e .env.test -- prisma migrate deploy",
+    "generate":"prisma generate",
+
+    "start:dev":"yarn migrate:dev && sleep 1 && nodemon src/server.js",
+    "start:prod":"yarn migrate:deploy && sleep 1 && node src/server.js",
+    "start:test": "yarn migrate:test && sleep 1 && mocha tests/*"
   },
   "type": "module",
   "dependencies": {
     "@prisma/client": "4.10.1",
+    "prisma": "4.10.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -31,14 +29,11 @@
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.2.1",
     "express-async-errors": "^3.1.1",
-    "helmet": "^7.0.0",
     "http-status-codes": "^2.2.0",
     "mocha": "^10.2.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
-    "prisma": "4.10.1",
     "supertest": "^6.3.3",
-    "validator": "^13.9.0",
-    "xss-clean": "^0.1.4"
+    "validator": "^13.9.0"
   }
 }
