@@ -1,4 +1,4 @@
-import primsaDB from "../db/db.js";
+import primsaDB from "../../db/db.js";
 import {
   BadRequestError,
   NotFoundError,

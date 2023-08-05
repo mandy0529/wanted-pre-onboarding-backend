@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import primsaDB from "../db/db.js";
+import primsaDB from "../../db/db.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 
 // create post -----------------------------------------------

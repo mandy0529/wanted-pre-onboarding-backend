@@ -7,7 +7,7 @@ import {
 } from "../lib/index.js";
 import { v4 as uuidv4 } from "uuid";
 import { BadRequestError } from "../errors/index.js";
-import prismaDB from "../db/db.js";
+import prismaDB from "../../db/db.js";
 import { StatusCodes } from "http-status-codes";
 
 // register user -----------------------------------------------
