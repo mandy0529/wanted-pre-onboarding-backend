@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "db:dev:up":"docker compose -f docker-compose.dev.yml up dev-db -d",
-    "app:dev:up":"docker compose -f docker-compose.dev.yml up app",
+    "app:dev:up":"docker compose -f docker-compose.dev.yml up dev-app",
     "migrate:dev":"dotenv -e .env.dev -- prisma migrate dev",
     "start:dev":"yarn migrate:dev && sleep 1 && nodemon src/server.js",
     
     "db:test:up":"docker compose -f docker-compose.test.yml up test-db -d",
-    "app:test:up":"docker compose -f docker-compose.test.yml up app",
+    "app:test:up":"docker compose -f docker-compose.test.yml up test-app",
     "migrate:test": "dotenv -e .env.test -- prisma migrate reset --force",
     "start:test": "yarn migrate:test && sleep 1 && mocha tests/*",
 
