@@ -28,6 +28,22 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["yarn", "start:test"]
+CMD ["yarn", "start:"]
+
+# 배포용 빌드 스테이지 -----------------------------------------
+FROM node:18.17 as prd
+
+WORKDIR /app
+
+COPY package.json ./
+COPY prisma ./prisma/
+
+RUN yarn
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["yarn", "start:prd"]
 
 
