@@ -1,0 +1,16 @@
+.idea
+.git
+.gitignore
+.dockerignore
+Dockerfile
+*.md
+*.sh
+*.yml
+scripts
+node_modules/
+!nodes_modules/.prisma
+.env*
+*.log
+.idea
+*.tmp
+*.DS_Store
