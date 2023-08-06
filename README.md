@@ -11,17 +11,20 @@
 
 <hr/>
 
-### 1. 지원자 성명 : 김민지
+## 1. 지원자 성명 : 김민지
 
 <hr/>
 
-### 2. 애플리케이션의 실행 방법 
+## 2. 애플리케이션의 실행 방법 
 
+#### 1. **AWS 배포 주소**
+http://13.209.87.140:3000/
+
+
+    
+#### 2. **DEV docker-compose 환경 실행 방법**
 - docker 환경이 반드시 셋팅되어 있어야 합니다. 
     참고 :https://hub.docker.com/ 
-    
-1. **DEV docker-compose 환경 실행 방법**
-
 - git clone
     ```
     git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
@@ -90,7 +93,7 @@
     ```
 - 해당 server에서 listening 하고있는 port로 켜집니다.
 
-2. **TEST docker-compose 환경 실행 방법**
+#### 3. **TEST docker-compose 환경 실행 방법**
 - git clone
     ```
     git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
@@ -160,11 +163,8 @@
     ```
 - 해당 server에서 listening 하고있는 port로 켜지고, mocha test code가 실행됩니다.
 
-3. **aws 배포한 주소**
-http://13.209.87.140:3000/
 
-
-4. **endpoint 호출 방법**
+#### 4. **endpoint 호출 방법**
    1. User
         - 회원가입 
         
@@ -208,28 +208,28 @@ http://13.209.87.140:3000/
         ```
 <hr/>   
 
-### 3. 데이터베이스 테이블 구조
-1. **User**
-    -   이 테이블은 애플리케이션의 사용자 정보를 저장합니다.
-    - id: UUID 형식으로 생성되는 사용자의 고유 식별자입니다.
-    - email: 사용자 이메일 주소로, 유일한 값이며 최대 255자까지 저장됩니다.
-    - password: 사용자 비밀번호로, 최대 255자까지 저장됩니다.
-    - Post: User와 Post 테이블 간의 관계를 나타내며, 하나의 사용자가 여러 개의 게시글을 작성할 수 있습니다.
+## 3. 데이터베이스 테이블 구조
+#### 1. **User**
+-   이 테이블은 애플리케이션의 사용자 정보를 저장합니다.
+- id: UUID 형식으로 생성되는 사용자의 고유 식별자입니다.
+- email: 사용자 이메일 주소로, 유일한 값이며 최대 255자까지 저장됩니다.
+- password: 사용자 비밀번호로, 최대 255자까지 저장됩니다.
+- Post: User와 Post 테이블 간의 관계를 나타내며, 하나의 사용자가 여러 개의 게시글을 작성할 수 있습니다.
 
-2. **Post**
-    - 이 테이블은 애플리케이션의 게시글 정보를 저장합니다.
-    - id: 자동으로 증가하는 게시글의 고유 식별자입니다.
-    - title: 게시글의 제목으로, 최대 255자까지 저장됩니다.
-    - content: 게시글의 내용으로, 최대 1000자까지 저장됩니다.
-    - author: 게시글과 User 테이블 간의 관계를 나타내며, 게시글의 작성자를 참조합니다.
-    - authorId: 게시글 작성자의 고유 식별자인 User 테이블의 id와 연결됩니다.
+#### 2. **Post**
+- 이 테이블은 애플리케이션의 게시글 정보를 저장합니다.
+- id: 자동으로 증가하는 게시글의 고유 식별자입니다.
+- title: 게시글의 제목으로, 최대 255자까지 저장됩니다.
+- content: 게시글의 내용으로, 최대 1000자까지 저장됩니다.
+- author: 게시글과 User 테이블 간의 관계를 나타내며, 게시글의 작성자를 참조합니다.
+- authorId: 게시글 작성자의 고유 식별자인 User 테이블의 id와 연결됩니다.
 <hr/>
 
-### 4. 구현한 API의 동작을 촬영한 데모 영상 링크
-데모영상 :[데모영상](https://drive.google.com/file/d/1kNPlbChNEV_2jJfSo68auxgj3zQy0zjD/view?usp=drive_link)
+## 4. 구현한 API의 동작을 촬영한 데모 영상 링크
+[데모영상](https://drive.google.com/file/d/1kNPlbChNEV_2jJfSo68auxgj3zQy0zjD/view?usp=drive_link)
 <hr/>
 
-### 5. 구현 방법 및 이유에 대한 간략한 설명
+## 5. 구현 방법 및 이유에 대한 간략한 설명
 1. **Prisma와 ORM 사용 이유**: Prisma는 타입 세이프한 쿼리 빌더로 데이터베이스 스키마와의 강력한 통합이 가능하다는 이유로 선택했습니다.
 
 2. **Docker를 활용한 mysql 사용 이유**: Docker는 애플리케이션의 독립성과 확장성을 높여서 배포와 관리를 용이하게 만들어준다는 이유로 선택했습니다.
@@ -264,8 +264,8 @@ http://13.209.87.140:3000/
     - page 쿼리 파라미터를 전달하여 원하는 페이지 번호를 지정하여 data를 가져옵니다.
 <hr/>
 
-### 6. API 명세(request/response 포함)
-1. **User**
+## 6. API 명세(request/response 포함)
+#### 1. **User**
 - **register user**
     - end point:
       ```
@@ -301,7 +301,7 @@ http://13.209.87.140:3000/
         - 400 Bad Request: 요청이 잘못 or 필수 정보 누락 or 유효성 검사 탈락
         - 500 Internal Server Error: 서버 오류로 로그인 실패
         <hr/>
-2. **Post**
+#### 2. **Post**
 - **create post**
     - end point:
         ```
@@ -390,18 +390,18 @@ http://13.209.87.140:3000/
     
 <hr/>
 
-### 7. 가산점 요소 추가 설명
+## 7. 가산점 요소 추가 설명
 
-##### 1. 통합테스트 추가
+#### 1. 통합테스트 추가
 - mocha, supertest, chai를 이용해 user, post 통합 테스트를 실행 했습니다.
 - 개발환경과 test 환경을 따로 구축하여 테스트코드를 실행할때마다 prisma test database를 reset시키고, test 실행 하였습니다.
 - package.json에서 dotenv-cli를 이용해서 test 환경과 dev 환경 env를 다른 파일을 바라보도록 설정하여 구성 하였습니다.
 
-##### 2. docker compose 이용해서 어플리케이션 환경 구성
+#### 2. docker compose 이용해서 어플리케이션 환경 구성
 - docker-compose 를 이용해 실행방법 [어플리케이션 실행방법](#2-애플리케이션의-실행-방법-엔드포인트-호출-방법-포함) 적어놨습니다.
 - docker-compose.yml 파일을 dev, test, prd로 나눠 각각 환경에 맞게 env 파일, port, build할 image를 바라보게 조정하여 구성하였습니다.
 
-##### 3. 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부)
+#### 3. 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부)
 - AWS 환경 설계 및 배포 과정:
     -  ECR(Elastic Container Registry)에 Docker 이미지 db와 app을 각각 docker로 build한 나의 이미지들을 업로드합니다. 
     -  ECS 클러스터를 생성합니다.
