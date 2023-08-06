@@ -16,7 +16,12 @@
 <hr/>
 
 ### 2. 애플리케이션의 실행 방법 
+
+- docker 환경이 반드시 셋팅되어 있어야 합니다. 
+    참고 :https://hub.docker.com/ 
+    
 1. **DEV docker-compose 환경 실행 방법**
+
 - git clone
     ```
     git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
@@ -74,13 +79,13 @@
 - docker compose dev.yml파일에서 dev-db를 먼저 up 시킵니다.
     ```
     yarn db:dev:up
-    or 
+        or 
     npm run db:dev:up
     ```
 - docker compose dev.yml 파일에서 app을 up 시킵니다.
     ```
     yarn app:dev:up
-    or 
+        or 
     npm run app:dev:up
     ```
 - 해당 server에서 listening 하고있는 port로 켜집니다.
