@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  # dev DB
+  dev-db:
+    container_name: dev-db
+    build:
+      context: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_PASSWORD: password123
+      MYSQL_DATABASE: wanted_pre_onboarding
+      MYSQL_USER: user123
+    ports:
+      - "3306:3306"
+    networks:
+      - wanted-work
+      
+  # node app DB
+  dev-app:
+    container_name: dev-app
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    networks:
+      - wanted-work
+    restart: on-failure:6 
+    env_file:
+      - .env.dev
+    depends_on:
+      - dev-db
+networks:
+  wanted-work:
+
+

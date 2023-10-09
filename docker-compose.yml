@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  # DB
+  prd-db:
+    image: public.ecr.aws/n7u8i2g6/wanted-onfailure6-mysql
+    container_name: prd-db
+    build:
+      context: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_PASSWORD: password123
+      MYSQL_DATABASE: wanted_pre_onboarding
+      MYSQL_USER: user123
+    ports:
+      - "3306:3306"
+    networks:
+      - wanted-work
+      
+  # node app
+  prd-app:
+    container_name: prd-app
+    build:
+      context: .
+      target: prd
+    image: public.ecr.aws/n7u8i2g6/wanted-onfailure6-node
+    ports:
+      - "3000:3000"
+    networks:
+      - wanted-work
+    env_file:
+      - .env.prd
+    restart: on-failure:6 
+
+networks:
+  wanted-work:
+
+
