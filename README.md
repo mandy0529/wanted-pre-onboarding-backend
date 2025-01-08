@@ -17,12 +17,8 @@
 
 ## 2. 애플리케이션의 실행 방법 
 
-#### 1. **AWS 배포 주소**
-http://13.209.87.140:3000/
-
-
     
-#### 2. **DEV docker-compose 환경 실행 방법**
+#### 1. **DEV docker-compose 환경 실행 방법**
 - docker 환경이 반드시 셋팅되어 있어야 합니다. 
     참고 :https://hub.docker.com/ 
 - git clone
@@ -93,7 +89,7 @@ http://13.209.87.140:3000/
     ```
 - 해당 server에서 listening 하고있는 port로 켜집니다.
 
-#### 3. **TEST docker-compose 환경 실행 방법**
+#### 2. **TEST docker-compose 환경 실행 방법**
 - git clone
     ```
     git clone https://github.com/mandy0529/wanted-pre-onboarding-backend.git
@@ -164,7 +160,7 @@ http://13.209.87.140:3000/
 - 해당 server에서 listening 하고있는 port로 켜지고, mocha test code가 실행됩니다.
 
 
-#### 4. **endpoint 호출 방법**
+#### 3. **endpoint 호출 방법**
    1. User
         - 회원가입 
         
@@ -176,8 +172,9 @@ http://13.209.87.140:3000/
         ```
         POST /api/v1/user/login
             -d '{ "email": "test@gmail.com", "password": "password1234" }
-        ```
-    2. Post
+        ```    
+        
+2. Post
         - 게시글 글쓰기 
                 <span style='color:red'> * 게시글을 작성할 때는 Bearer Token이 필요합니다. <br/> * Authorization 헤더에 유효한 Bearer Token을 포함하여 요청하세요.</span>
         ```
